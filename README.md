@@ -10,4 +10,4 @@ User registration validator with 16 automated tests covering email, password, an
 
 ## API Testing
 Automated API tests using Python requests library and pytest, covering GET and POST requests, status code validation, and response data verification against JSONPlaceholder API.
-[View code](api-tests/)
+[View code](api-tests/) .
