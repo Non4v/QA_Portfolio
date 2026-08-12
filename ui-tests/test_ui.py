@@ -1,23 +1,29 @@
 def test_homepage_title(page):
-    page.goto("https://practicesoftwaretesting.com")
-    assert "Practice Software Testing" in page.title()
-
-
-def test_search_returns_results(page):
-    page.goto("https://practicesoftwaretesting.com")
-    page.locator("input[placeholder='Search']").fill("pliers")
-    page.keyboard.press("Enter")
-    page.wait_for_load_state("domcontentloaded")
-    assert page.locator(".card").count() > 0
+    page.goto("https://practice.expandtesting.com")
+    assert "Practice" in page.title()
 
 
 def test_login_page_loads(page):
-    page.goto("https://practicesoftwaretesting.com/auth/login")
-    page.wait_for_selector("input[formcontrolname='email']")
-    assert page.locator("input[formcontrolname='email']").is_visible()
+    page.goto("https://practice.expandtesting.com/login")
+    page.wait_for_selector("#username")
+    assert page.locator("#username").is_visible()
 
 
-def test_homepage_shows_products(page):
-    page.goto("https://practicesoftwaretesting.com")
-    page.wait_for_selector(".card")
-    assert page.locator(".card").count() > 0
+def test_login_with_wrong_credentials(page):
+    page.goto("https://practice.expandtesting.com/login")
+    page.wait_for_selector("#username")
+    page.locator("#username").fill("wronguser")
+    page.locator("#password").fill("wrongpassword")
+    page.locator("button[type='submit']").click()
+    page.wait_for_selector("#flash")
+    assert page.locator("#flash").is_visible()
+
+
+def test_login_with_correct_credentials(page):
+    page.goto("https://practice.expandtesting.com/login")
+    page.wait_for_selector("#username")
+    page.locator("#username").fill("practice")
+    page.locator("#password").fill("SuperSecretPassword!")
+    page.locator("button[type='submit']").click()
+    page.wait_for_selector("#flash")
+    assert page.locator("#flash").is_visible()
